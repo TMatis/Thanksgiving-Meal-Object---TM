@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanksgiving Meal Object</title>
+</head>
+<body>
+    <h1>Enjoy your Thanksgiving!</h1>
+    <p class="MealPlan"></p>
+    <p class="PriceInfo"></p>
+    <p class="CalsInfo"></p>
+    <h2 class="goodbye"></h2>
+    
+</body>
+<script>
+
+    const thanksgivingMeal = {
+
+        starter : { 
+            fruit: "honeydew melon",
+            wine: "moscato",
+            calories: 180
+        },
+
+        entree : {
+            meat: "Turkey",
+            alt: "Stuffed green peppers",
+            vegetables : {
+                potatoes: "Creamed mashed potatoes",
+                greens: "French beans",
+                salad: "Radacchio"
+                },
+            sides : {
+                bread: "garlic bread rolls",
+                pasta: "Macaroni and Cheese"
+                },
+            calories: 450
+            },
+
+        dessert: {
+            ice_cream: "pumpkin-vanilla",
+            cake: "frosted pumpkin pie",
+            calories: 300
+        },
+
+        total_cost: 25.0,
+        senior_discount: .10,
+
+        prettyPrint : function(){
+            // Collate the menu here
+        // display the content of the starter, the entree and the dessert
+            let menuStr = 
+            `Your starter is: ${this.starter.fruit} and a wine of ${this.starter.wine}.<br>
+            Your entrée is ${this.entree.meat} with an alt of ${this.entree.alt}, the vegies are: ${this.entree.vegetables.potatoes}, ${this.entree.vegetables.greens}, and ${this.entree.vegetables.salad}. The sides available are: ${this.entree.sides.bread} and ${this.entree.sides.pasta}.<br>
+            For Desert your have: ${this.dessert.ice_cream} are ${this.dessert.cake}.<br>`;
+            console.log(`menu string`);
+            return(menuStr);
+        },
+
+        totalPrice(isSenior) {
+            // display the total price, given indicator isSenior - true or false
+            if (isSenior == true) {
+                console.log(`Is Senior: ${this.total_cost}, ${this.senior_discount}`);
+                let Sprice = this.total_cost + (this.total_cost * this.senior_discount);
+                let APrice = this.total_cost
+                console.log(`total price: $${Sprice}, `);
+                return(`Seniors get a 10% discount, so the price for seniors is: $${Sprice}, while adult is: $${APrice}.`);
+            }
+            else {
+                console.log(`Not Seinor: ${this.total_cost}`)
+                let Tprice = this.total_cost
+                return(`The price is: $${Tprice} per person.`);
+            }
+        },
+
+        totalCalories: function() {
+            // Add the total calories
+            console.log(`total cals function`);
+            return (this.starter.calories + this.entree.calories + this.dessert.calories) 
+        },
+
+        caloriesFrom: function (indicator) {
+            // get the total calories for the indicator
+            // 1 - starter, 2 - entree, 3 - dessert
+            console.log(`calFrom function`);
+            return(`Starter: ${this.starter.calories}cal, Entrée: ${this.entree.calories}cal, and Dessert: ${this.dessert.calories}cal.`);
+        },
+        
+};
+
+        
+let menuStr = document.querySelector(".MealPlan");
+menuStr.innerHTML = `${thanksgivingMeal.prettyPrint()}`;
+
+let seniorTrueFalse = prompt(`Is there a senior? (Y or N): `)
+if (seniorTrueFalse == "Y"){
+    console.log(`answerd yes`);
+    let price = document.querySelector(".PriceInfo");
+    price.innerHTML = `${thanksgivingMeal.totalPrice(true)}`;
+}
+else if (seniorTrueFalse == "N") {
+    console.log(`answerd no`);
+    let price = document.querySelector(".PriceInfo");
+    price.innerHTML = `${thanksgivingMeal.totalPrice(false)}`;
+}
+else {
+    console.log(`not a valid answer so it defaults to yes: `);
+    alert(`Please reload the tab and enter a valid answer. Other wise it defaults to Y.`)
+    let price = document.querySelector(".PriceInfo");
+    price.innerHTML = `${thanksgivingMeal.totalPrice(true)}`;
+}
+
+let cals = document.querySelector(".CalsInfo");
+cals.innerHTML = 
+`Worried about the calories?! <br>
+The total calories is: ${thanksgivingMeal.totalCalories()}cal. <br>
+The Breakdown is as follows: ${thanksgivingMeal.caloriesFrom()}`;
+
+let goodbye = document.querySelector(".goodbye");
+goodbye.innerHTML = `Good Luck eating it all!!!`
+console.log(`Exicuted program, Good Bye!`);
+</script>
+</html>
